@@ -4,7 +4,7 @@ import path from "path";
 
 export default defineConfig({
     plugins: [react()],
-    base: "/ammar-portfolio/",
+    base: "./", // Is ek dot (.) se saare 404 errors hamesha ke liye fix ho jayenge
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),
