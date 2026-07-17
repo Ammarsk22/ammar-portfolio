@@ -21,8 +21,9 @@ export default function Navbar() {
         <a href="#home" className="flex shrink-0 items-center gap-3 pl-2">
           {/* Circular Image replacing the text icon */}
           <div className="h-9 w-9 overflow-hidden rounded-full border border-white/20">
+            {/* PATH UPDATED HERE: Added ./ before favicon.png */}
             <img 
-              src="/favicon.png" 
+              src="./favicon.png" 
               alt="Ammar Shaikh" 
               className="h-full w-full object-cover"
             />
@@ -49,7 +50,7 @@ export default function Navbar() {
 
         {/* Resume button — desktop */}
         <motion.a
-          href="/resume.pdf"
+          href="./resume.pdf" // PATH UPDATED HERE
           download
           className="hidden shrink-0 rounded-full bg-white px-5 py-2.5 text-[13px] font-semibold text-bg md:inline-block"
           whileHover={{
@@ -97,7 +98,7 @@ export default function Navbar() {
               ))}
             </ul>
             <a
-              href="/resume.pdf"
+              href="./resume.pdf" // PATH UPDATED HERE
               download
               className="mt-5 block rounded-full bg-white px-5 py-3 text-center text-[13px] font-semibold text-bg"
             >

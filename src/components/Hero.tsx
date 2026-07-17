@@ -33,8 +33,9 @@ export default function Hero() {
       {/* ---------- Base portrait (full bleed) ---------- */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div className="absolute inset-0" {...zoomProps}>
+          {/* PATH UPDATED HERE: Added ./ before images */}
           <img
-            src="/images/Base_image.png"
+            src="./images/Base_image.png"
             alt="Ammar Shaikh, full stack developer"
             className="h-full w-full object-cover object-[50%_18%]"
             loading="eager"
@@ -58,8 +59,9 @@ export default function Hero() {
         }}
       >
         <motion.div className="absolute inset-0" {...zoomProps}>
+          {/* PATH UPDATED HERE: Added ./ before images */}
           <img
-            src="/images/Reveal_image.png"
+            src="./images/Reveal_image.png"
             alt=""
             aria-hidden="true"
             className="h-full w-full object-cover object-[50%_18%]"
