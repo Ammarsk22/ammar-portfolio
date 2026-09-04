@@ -82,6 +82,49 @@ body {
   mix-blend-mode: screen;
 }
 
+/* marquee ticker — used by the tech-stack strip under the hero */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* soft pulse for the "open to work" status dot */
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+}
+
+.pulse-status {
+  animation: pulseDot 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* faint dotted backdrop used behind card canvases and the education panel */
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 61, 99, 0.35) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
