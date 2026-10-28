@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "npm run build -- --base=/ammar-portfolio/",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
