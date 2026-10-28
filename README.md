@@ -2,7 +2,7 @@
 
 Personal portfolio of Ammar Shaikh, Full Stack Developer. Built with React 18, TypeScript, Vite, Tailwind CSS and Framer Motion.
 
-**Live:** https://ammarsk22.github.io/ammar-portfolio/
+**Live:** https://skammar-portfolio.netlify.app/
 
 ![Portfolio home screen](public/screenshot.jpg)
 

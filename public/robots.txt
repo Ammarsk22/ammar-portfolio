@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ammarsk22.github.io/ammar-portfolio/sitemap.xml
+Sitemap: https://skammar-portfolio.netlify.app/sitemap.xml
