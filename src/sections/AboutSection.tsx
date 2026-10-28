@@ -1,72 +1,77 @@
-import { Code, Smartphone, Cloud, Layers, Target, Sparkles, LucideIcon } from "lucide-react";
-import { PERSONAL_INFO, MINDSET_PILLARS } from "../data/portfolioData";
+import { Cloud, Code, Layers, Sparkles, Smartphone, Target, LucideIcon } from "lucide-react";
+import { MINDSET_PILLARS, PERSONAL_INFO } from "../data/portfolioData";
+import { asset } from "../lib/utils";
 import SectionHeader from "../components/SectionHeader";
+import BackgroundVideo from "../components/BackgroundVideo";
 
 const ICONS: Record<string, LucideIcon> = { Code, Smartphone, Cloud, Layers, Target, Sparkles };
 
 export default function AboutSection() {
   return (
-    <section id="about" className="border-b border-edge px-6 py-16 sm:px-10 lg:px-14">
-      <SectionHeader number="03" title="About Me" meta="Core Focus Areas" />
+    <section id="about" className="border-t border-edge px-6 py-20 sm:px-10 lg:px-14 lg:py-28">
+      <div className="mx-auto max-w-5xl">
+        <SectionHeader title="About me" />
 
-      <div className="mt-10 max-w-3xl">
-        <p className="text-base leading-relaxed text-ink-soft sm:text-lg">{PERSONAL_INFO.bio}</p>
-      </div>
+        {/* Video panel: stays dark in both themes so the text always has contrast */}
+        <div className="theme-dark relative mt-10 overflow-hidden rounded-3xl bg-bg text-ink">
+          <BackgroundVideo src={asset("media/about-bg.mp4")} poster={asset("media/about-poster.webp")} />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/65 to-black/45" aria-hidden="true" />
 
-      {/* Focus panel */}
-      <div className="mt-10 grid grid-cols-1 gap-6 rounded-2xl border border-edge bg-glass-soft p-6 sm:p-8 lg:grid-cols-2">
-        <div className="space-y-3">
-          <span className="inline-block rounded-full border border-accent2/30 bg-accent2-soft px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-accent2">
-            PWA &amp; Firebase Engineering
-          </span>
-          <ul className="space-y-2 pt-2 text-sm text-ink-soft">
-            <li className="flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-accent2" /> Offline-first architecture &amp; Firestore data
-              design
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-accent2" /> Role-based auth &amp; secure client-side flows
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-accent2" /> Responsive, installable UI across devices
-            </li>
-          </ul>
-        </div>
-        <div className="space-y-3 border-t border-edge pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-          <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-ink-dim">
-            Full-Stack Direction
-          </span>
-          <h3 className="text-lg font-bold text-ink">
-            Growing from vanilla JS foundations into a full-stack React engineer.
-          </h3>
-          <p className="text-sm leading-relaxed text-ink-soft">
-            Core technologies &amp; frameworks: React.js, TypeScript, Firebase, Tailwind CSS, Node.js.
-          </p>
-        </div>
-      </div>
+          <div className="relative grid gap-10 p-7 sm:p-12 lg:grid-cols-[1.35fr_1fr] lg:gap-14">
+            <div>
+              <p className="font-serif-italic text-3xl leading-snug sm:text-[2.5rem] sm:leading-[1.15]">
+                Growing from vanilla JS foundations into a full-stack React engineer.
+              </p>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-soft sm:text-[17px]">
+                {PERSONAL_INFO.bio}
+              </p>
+              <ul className="mt-6 space-y-2 text-sm text-ink-soft">
+                <li className="flex items-start gap-3">
+                  <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent2" aria-hidden="true" />
+                  Offline-first architecture and Firestore data design
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent2" aria-hidden="true" />
+                  Role-based auth and secure client-side flows
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent2" aria-hidden="true" />
+                  Responsive, installable UI across devices
+                </li>
+              </ul>
+            </div>
 
-      {/* Mindset pillars */}
-      <div className="mt-14 space-y-6">
-        <div className="font-mono text-[11px] font-bold uppercase tracking-widest text-ink-dim">
-          What I Care About as a Developer
+            <dl className="self-end divide-y divide-ink/15 border-y border-ink/15">
+              {PERSONAL_INFO.stats.map((stat) => (
+                <div key={stat.label} className="flex items-baseline justify-between gap-6 py-3.5">
+                  <dt className="text-sm text-ink-dim">{stat.label}</dt>
+                  <dd className="text-right">
+                    <span className="block font-display text-lg font-bold">{stat.value}</span>
+                    <span className="block text-xs text-ink-soft">{stat.sub}</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+        <h3 className="mt-16 font-display text-2xl font-bold sm:text-3xl">What I care about as a developer</h3>
+        <ul className="mt-6 grid grid-cols-1 gap-x-14 sm:grid-cols-2">
           {MINDSET_PILLARS.map((pillar) => {
             const Icon = ICONS[pillar.iconName] ?? Sparkles;
             return (
-              <div
-                key={pillar.id}
-                className="group rounded-xl border border-edge bg-glass-soft p-5 transition-all duration-300 hover:border-accent2/40 hover:bg-glass"
-              >
-                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg border border-edge bg-white/5 text-accent2 transition-colors group-hover:bg-accent2 group-hover:text-black">
-                  <Icon className="h-[18px] w-[18px]" />
+              <li key={pillar.id} className="flex items-start gap-4 border-t border-edge py-6">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent2-soft text-accent2">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <h4 className="font-display text-base font-bold">{pillar.title}</h4>
+                  <p className="mt-1 text-sm leading-relaxed text-ink-soft">{pillar.description}</p>
                 </div>
-                <h4 className="text-sm font-bold text-ink">{pillar.title}</h4>
-                <p className="mt-1.5 text-xs leading-relaxed text-ink-soft">{pillar.description}</p>
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </section>
   );

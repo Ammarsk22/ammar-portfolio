@@ -9,9 +9,7 @@ export default function ScrollIndicator() {
       animate={prefersReducedMotion ? undefined : { y: [0, 8, 0] }}
       transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
     >
-      <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-ink-soft">
-        Scroll to Explore
-      </span>
+      <span className="text-xs text-ink-soft">Scroll to explore</span>
       <svg width="22" height="34" viewBox="0 0 22 34" fill="none" aria-hidden="true">
         <rect
           x="1"

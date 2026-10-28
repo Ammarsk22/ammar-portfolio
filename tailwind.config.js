@@ -1,24 +1,30 @@
 /** @type {import('tailwindcss').Config} */
+// Every colour comes from a CSS variable (see src/index.css) so the whole site
+// flips between the dark and light theme without touching a single component.
 export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        bg: "#050505",
-        ink: "#FFFFFF",
-        "ink-soft": "rgba(255,255,255,.72)",
-        "ink-dim": "rgba(255,255,255,.48)",
+        bg: "rgb(var(--c-bg) / <alpha-value>)",
+        surface: "rgb(var(--c-surface) / <alpha-value>)",
+        ink: "rgb(var(--c-ink) / <alpha-value>)",
+        "ink-soft": "rgb(var(--c-ink) / var(--a-soft))",
+        "ink-dim": "rgb(var(--c-ink) / var(--a-dim))",
+        accent2: "rgb(var(--c-accent) / <alpha-value>)",
+        "accent2-soft": "rgb(var(--c-accent) / 0.13)",
+        "on-accent": "rgb(var(--c-on-accent) / <alpha-value>)",
+        glass: "rgb(var(--c-ink) / 0.07)",
+        "glass-soft": "rgb(var(--c-ink) / 0.035)",
+        edge: "rgb(var(--c-ink) / 0.13)",
         accent: "#560014",
-        "accent2": "#FF3D63",
-        "accent2-soft": "rgba(255,61,99,.14)",
-        glass: "rgba(255,255,255,.08)",
-        "glass-soft": "rgba(255,255,255,.04)",
-        edge: "rgba(255,255,255,.12)",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        serif: ["Playfair Display", "serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+        sans: ['"Geist Variable"', "system-ui", "sans-serif"],
+        display: ['"Bricolage Grotesque Variable"', '"Geist Variable"', "system-ui", "sans-serif"],
+        serif: ['"Instrument Serif"', "Georgia", "serif"],
+        mono: ['"JetBrains Mono Variable"', "ui-monospace", "monospace"],
       },
       letterSpacing: {
         tightish: "-0.015em",

@@ -2,55 +2,125 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ------------------------------------------------------------------
+   Theme tokens
+   Dark is the default (it matches the oxblood portrait in the hero).
+   `.theme-dark` re-declares the dark tokens for a region that must stay
+   dark in light mode: the hero photo, the intro and the video panels.
+------------------------------------------------------------------- */
+:root,
+.theme-dark {
+  --c-bg: 5 5 5;
+  --c-surface: 14 11 12;
+  --c-ink: 255 255 255;
+  --c-accent: 255 61 99;
+  --c-on-accent: 14 0 5;
+  --a-soft: 0.72;
+  --a-dim: 0.55;
   color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --c-bg: 246 243 243;
+  --c-surface: 255 255 255;
+  --c-ink: 24 9 13;
+  --c-accent: 200 16 46;
+  --c-on-accent: 255 255 255;
+  --a-soft: 0.76;
+  --a-dim: 0.62;
+  color-scheme: light;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  background-color: rgb(var(--c-bg));
+}
+
 html,
 body,
 #root {
-  height: 100%;
-  background-color: #050505;
+  min-height: 100%;
 }
 
 body {
   margin: 0;
-  font-family: "Inter", system-ui, sans-serif;
-  color: #ffffff;
-  letter-spacing: -0.015em;
+  font-family: "Geist Variable", system-ui, sans-serif;
+  background-color: rgb(var(--c-bg));
+  color: rgb(var(--c-ink));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: none;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Bricolage Grotesque Variable", "Geist Variable", system-ui, sans-serif;
+  letter-spacing: -0.02em;
 }
 
 ::selection {
-  background: #560014;
-  color: #ffffff;
+  background: rgb(var(--c-accent));
+  color: rgb(var(--c-on-accent));
 }
 
-/* thin, quiet scrollbar so it doesn't fight the editorial mood */
+/* Sections stop below the fixed mobile header when jumped to. */
+section[id] {
+  scroll-margin-top: 3.5rem;
+}
+@media (min-width: 1024px) {
+  section[id] {
+    scroll-margin-top: 0;
+  }
+}
+
+/* Keyboard focus is always visible. */
+:focus-visible {
+  outline: 2px solid rgb(var(--c-accent));
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* thin, quiet scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: rgb(var(--c-bg));
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgb(var(--c-ink) / 0.2);
   border-radius: 999px;
-  border: 2px solid #050505;
+  border: 2px solid rgb(var(--c-bg));
 }
 
 .font-serif-italic {
-  font-family: "Playfair Display", serif;
+  font-family: "Instrument Serif", Georgia, serif;
   font-style: italic;
+  font-weight: 400;
 }
 
-/* film grain — SVG turbulence, tiled, blended softly over the portrait */
+/* ------------------------------------------------------------------
+   Custom cursor — only switched on for mouse-like pointers, and only
+   after the component has mounted, so a JS failure never hides the cursor.
+------------------------------------------------------------------- */
+html.has-custom-cursor,
+html.has-custom-cursor a,
+html.has-custom-cursor button,
+html.has-custom-cursor summary,
+html.has-custom-cursor label,
+html.has-custom-cursor [role="button"] {
+  cursor: none;
+}
+
+/* ------------------------------------------------------------------
+   Hero film treatment
+------------------------------------------------------------------- */
 .grain-layer {
   position: absolute;
   inset: -20%;
@@ -74,15 +144,11 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse at 50% 30%,
-    rgba(255, 244, 235, 0.08),
-    transparent 60%
-  );
+  background: radial-gradient(ellipse at 50% 30%, rgba(255, 244, 235, 0.08), transparent 60%);
   mix-blend-mode: screen;
 }
 
-/* marquee ticker — used by the tech-stack strip under the hero */
+/* marquee ticker under the hero */
 @keyframes marquee {
   0% {
     transform: translateX(0%);
@@ -95,14 +161,14 @@ body {
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 32s linear infinite;
+  animation: marquee 38s linear infinite;
 }
 
 .animate-marquee:hover {
   animation-play-state: paused;
 }
 
-/* soft pulse for the "open to work" status dot */
+/* soft pulse for the "open to work" dot */
 @keyframes pulseDot {
   0%,
   100% {
@@ -119,13 +185,10 @@ body {
   animation: pulseDot 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* faint dotted backdrop used behind card canvases and the education panel */
-.dot-grid {
-  background-image: radial-gradient(rgba(255, 61, 99, 0.35) 1px, transparent 1px);
-  background-size: 18px 18px;
-}
-
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
@@ -134,4 +197,54 @@ body {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ------------------------------------------------------------------
+   Cursor dot + ring (see CustomCursor.tsx)
+------------------------------------------------------------------- */
+.cursor-ring,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.cursor-ring__shape,
+.cursor-dot__shape {
+  position: absolute;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.cursor-ring__shape {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid rgb(var(--c-accent) / 0.7);
+}
+
+.cursor-dot__shape {
+  width: 6px;
+  height: 6px;
+  background: rgb(var(--c-accent));
+}
+
+.cursor-ring[data-state="link"] .cursor-ring__shape {
+  width: 56px;
+  height: 56px;
+  border-color: rgb(var(--c-accent));
+  background: rgb(var(--c-accent) / 0.16);
+}
+
+.cursor-ring[data-state="text"],
+.cursor-dot[data-state="text"] {
+  opacity: 0 !important;
 }

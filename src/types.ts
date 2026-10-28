@@ -63,6 +63,8 @@ export interface ResearchPublicationItem {
   paperType: string;
   status: string;
   doiOrLink?: string;
+  documents: { label: string; href: string; meta: string }[];
+  certificatePreview?: string;
   abstract: string;
   keywords: string[];
   keyHighlights: string[];

@@ -26,31 +26,42 @@ export const PERSONAL_INFO = {
   status: "Open to Full-Stack & Frontend Opportunities",
   statusShort: "Open to work",
   bio: "Aspiring web developer and B.Tech Computer Technology student with hands-on experience building responsive, cloud-based applications. Strong grasp of frontend technologies, Progressive Web App development, and UI/UX principles — eager to contribute clean code and user-centric design to a team that ships real products.",
-  resumeUrl: "./resume.pdf",
+  resumeUrl: "resume.pdf",
   stats: [
-    { label: "DEGREE STATUS", value: "B.Tech", sub: "Computer Technology" },
-    { label: "PROJECTS SHIPPED", value: "4+", sub: "Real-World Apps" },
-    { label: "CORE STACK", value: "JS + Firebase", sub: "PWA Engineering" },
-    { label: "FORAGE TRACKS", value: "2", sub: "SE & AWS Simulations" },
+    { label: "Degree", value: "B.Tech", sub: "Computer Technology" },
+    { label: "Projects shipped", value: "4+", sub: "Real-World Apps" },
+    { label: "Core stack", value: "JS + Firebase", sub: "PWA Engineering" },
+    { label: "Forage tracks", value: "2", sub: "SE & AWS Simulations" },
   ],
 };
 
+export const NAV_LINKS = [
+  { id: "home", label: "Home" },
+  { id: "projects", label: "Projects" },
+  { id: "experience", label: "Experience" },
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "education", label: "Education" },
+  { id: "publications", label: "Publications" },
+  { id: "contact", label: "Contact" },
+];
+
 export const MARQUEE_TECH = [
-  "JAVASCRIPT (ES6+)",
-  "REACT.JS",
-  "TYPESCRIPT",
+  "JavaScript",
+  "React",
+  "TypeScript",
   "HTML5",
   "CSS3",
-  "TAILWIND CSS",
-  "BOOTSTRAP",
-  "FIREBASE",
-  "FIRESTORE",
+  "Tailwind CSS",
+  "Bootstrap",
+  "Firebase",
+  "Firestore",
   "PWA",
-  "CHART.JS",
-  "NODE.JS",
-  "GIT & GITHUB",
-  "PYTHON",
-  "JAVA",
+  "Chart.js",
+  "Node.js",
+  "Git & GitHub",
+  "Python",
+  "Java",
 ];
 
 export const PROJECTS: ProjectItem[] = [
@@ -59,7 +70,7 @@ export const PROJECTS: ProjectItem[] = [
     number: "01",
     title: "Shaikh Digital ERP",
     tagline: "Cloud ERP for the flex printing industry",
-    category: "SYSTEM",
+    category: "System",
     year: "2025 — Present",
     status: "Actively maintained",
     shortDescription:
@@ -120,7 +131,7 @@ export const PROJECTS: ProjectItem[] = [
     number: "03",
     title: "Faizan-E-Madina Sunni Masjid",
     tagline: "Community web app, built with Kasim Shah",
-    category: "FRONTEND",
+    category: "Frontend",
     year: "2026 — Present",
     status: "In progress",
     shortDescription:
@@ -146,7 +157,7 @@ export const PROJECTS: ProjectItem[] = [
     number: "04",
     title: "Photo Contest Registration App",
     tagline: "Contest entries with auto-generated certificates",
-    category: "FRONTEND",
+    category: "Frontend",
     year: "Feb 2025 — Mar 2025",
     status: "Completed",
     shortDescription:
@@ -174,7 +185,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     rolePrefix: "Virtual Solutions Architect Intern at ",
     companyName: "Forage — AWS Simulation",
     companyLink: "https://www.theforage.com/",
-    period: "MAY 2025",
+    period: "May 2025",
     summary:
       "Completed a job-simulation track built around AWS Solutions Architecture, designing scalable, cloud-based hosting setups inside a mock AWS environment.",
     modules: [
@@ -194,7 +205,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     rolePrefix: "Virtual Software Engineer Intern at ",
     companyName: "Forage",
     companyLink: "https://www.theforage.com/",
-    period: "NOV 2024",
+    period: "Nov 2024",
     summary:
       "Completed a software engineering job-simulation covering the everyday tasks of an engineering team, from proposing a feature to shipping a fix.",
     modules: [
@@ -341,7 +352,7 @@ export const MINDSET_PILLARS: MindsetCard[] = [
 export const RESEARCH_PUBLICATIONS: ResearchPublicationItem[] = [
   {
     id: "pub-01",
-    title: "DIGITAL MINDS, TROUBLED HEARTS: A SURVEY ON TECHNOLOGY AND MENTAL HEALTH AMONG YOUNG ADULTS",
+    title: "Digital Minds, Troubled Hearts: A Survey on Technology and Mental Health Among Young Adults",
     journalOrConference: "Journal of Academic Trends & Innovative Research (JATIR) (ISSN: 3139-8464)",
     authors: [
       "Fakir Mohammad Kasim Salim Shah",
@@ -355,6 +366,12 @@ export const RESEARCH_PUBLICATIONS: ResearchPublicationItem[] = [
     paperType: "Peer-Reviewed Research Paper",
     status: "Published",
     doiOrLink: "https://jatir.org/article.php?paperid=140305",
+    documents: [
+      { label: "Read the paper", href: "docs/digital-minds-troubled-hearts-paper.pdf", meta: "PDF, 21 pages" },
+      { label: "Acceptance letter", href: "docs/jatir-acceptance-letter.pdf", meta: "PDF, dated 31 May 2026" },
+      { label: "My certificate", href: "docs/ammar-research-certificate.pdf", meta: "PDF, Vol. 2 Issue 6" },
+    ],
+    certificatePreview: "docs/ammar-research-certificate.webp",
     abstract:
       "Today, smartphones, social media, and artificial intelligence are a core part of how young people live, learn, socialise, and see themselves. For the 15–26 age group, being online is as natural as breathing — but this constant digital immersion comes at a cost that we are only beginning to understand. This paper investigates how technology use affects the psychological well-being of young adults in India, with a focus on undergraduate students, using a mixed-methods design of a structured survey plus a review of academic literature across six mental health dimensions: anxiety, sleep disruption, concentration difficulty, social comparison, loneliness, and AI-induced career anxiety.",
     keywords: ["Mental Health", "Social Media", "AI Anxiety", "FOMO", "Screen Time", "Digital Addiction", "Digital Well-being"],

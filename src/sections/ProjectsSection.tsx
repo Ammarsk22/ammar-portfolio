@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowUpRight, Play } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { PROJECTS, PERSONAL_INFO } from "../data/portfolioData";
 import { ProjectItem } from "../types";
 import SectionHeader from "../components/SectionHeader";
@@ -8,128 +8,100 @@ interface ProjectsSectionProps {
   onSelectProject: (project: ProjectItem) => void;
 }
 
-const CATEGORIES = ["ALL", "SYSTEM", "PWA", "FRONTEND"];
+const FILTERS = ["All", "System", "PWA", "Frontend"];
 
 export default function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
-  const [activeCategory, setActiveCategory] = useState("ALL");
+  const [activeFilter, setActiveFilter] = useState("All");
 
-  const filtered =
-    activeCategory === "ALL" ? PROJECTS : PROJECTS.filter((p) => p.category === activeCategory);
+  const filtered = activeFilter === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === activeFilter);
 
   return (
-    <section id="projects" className="border-b border-edge px-6 py-16 sm:px-10 lg:px-14">
-      <SectionHeader number="01" title="Projects" meta="Featured Work & Case Studies" />
+    <section id="projects" className="border-t border-edge px-6 py-20 sm:px-10 lg:px-14 lg:py-28">
+      <div className="mx-auto max-w-5xl">
+        <SectionHeader
+          title="Projects"
+          intro="Real apps for real users, from a cloud ERP for a family printing business to a masjid community site. Open any project for the full case study."
+        />
 
-      {/* Filter tabs */}
-      <div className="flex flex-wrap items-center gap-2 pb-10 pt-6">
-        {CATEGORIES.map((cat) => {
-          const isActive = activeCategory === cat;
-          return (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`rounded-full px-4 py-2 font-mono text-xs font-bold tracking-wider transition-colors sm:text-sm ${
-                isActive ? "bg-accent2 text-black" : "bg-glass text-ink-soft hover:bg-white/10 hover:text-ink"
-              }`}
+        <div className="mt-10 flex flex-wrap items-center gap-2" role="group" aria-label="Filter projects by type">
+          {FILTERS.map((filter) => {
+            const isActive = activeFilter === filter;
+            return (
+              <button
+                key={filter}
+                type="button"
+                onClick={() => setActiveFilter(filter)}
+                aria-pressed={isActive}
+                className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+                  isActive
+                    ? "border-ink bg-ink text-bg"
+                    : "border-edge text-ink-soft hover:border-ink/40 hover:text-ink"
+                }`}
+              >
+                {filter}
+              </button>
+            );
+          })}
+        </div>
+
+        <ul className="mt-8 border-t border-edge">
+          {filtered.map((project) => (
+            <li
+              key={project.id}
+              className="group relative border-b border-edge transition-colors duration-300 focus-within:bg-glass-soft hover:bg-glass-soft"
             >
-              {cat}
-            </button>
-          );
-        })}
-      </div>
+              <div className="grid grid-cols-1 gap-4 py-8 md:grid-cols-[11rem_1fr_auto] md:gap-8 md:px-4">
+                <div className="text-sm text-ink-dim">
+                  <p>{project.year}</p>
+                  <p className="mt-1">{project.status}</p>
+                </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
-        {filtered.map((project) => (
-          <div
-            key={project.id}
-            onClick={() => onSelectProject(project)}
-            className="group flex cursor-pointer flex-col justify-between overflow-hidden rounded-2xl border border-edge bg-glass-soft transition-all duration-300 hover:border-accent2/50 hover:bg-glass"
+                <div>
+                  <h3 className="font-display text-2xl font-bold tracking-tight transition-colors duration-300 group-hover:text-accent2 sm:text-3xl">
+                    <button
+                      type="button"
+                      onClick={() => onSelectProject(project)}
+                      className="text-left after:absolute after:inset-0 after:content-['']"
+                    >
+                      {project.title}
+                      <span className="sr-only"> — open case study</span>
+                    </button>
+                  </h3>
+                  <p className="mt-1 font-serif-italic text-lg text-ink-soft sm:text-xl">{project.tagline}</p>
+                  <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-soft sm:text-[15px]">
+                    {project.shortDescription}
+                  </p>
+                  <ul className="mt-4 flex flex-wrap gap-1.5">
+                    {project.techStack.slice(0, 5).map((tech) => (
+                      <li key={tech} className="rounded-md border border-edge px-2 py-0.5 font-mono text-[11px] text-ink-soft">
+                        {tech}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <span
+                  aria-hidden="true"
+                  className="hidden h-12 w-12 items-center justify-center self-center rounded-full border border-edge text-ink transition-all duration-300 group-hover:border-accent2 group-hover:bg-accent2 group-hover:text-on-accent md:flex"
+                >
+                  <ArrowUpRight className="h-5 w-5" />
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-10">
+          <a
+            href={PERSONAL_INFO.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 border-b border-ink pb-1 text-sm font-medium text-ink transition-colors hover:border-accent2 hover:text-accent2"
           >
-            {/* Browser-frame mockup */}
-            <div className="relative overflow-hidden border-b border-edge bg-black/60">
-              <div className="flex items-center justify-between border-b border-white/10 bg-black/40 px-3.5 py-2.5 font-mono text-[11px] text-ink-dim">
-                <div className="flex items-center gap-1.5">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
-                  <span className="ml-2 hidden text-[10px] text-ink-dim sm:inline">
-                    ammarsk22.dev/{project.id}
-                  </span>
-                </div>
-                <div className="rounded-full bg-white/10 px-2 py-0.5 font-mono text-[10px] font-bold text-accent2">
-                  PROJ-{project.number}
-                </div>
-              </div>
-
-              <div className="dot-grid relative flex h-48 flex-col justify-between bg-gradient-to-br from-[#0d0d0d] via-[#0a0a0a] to-black p-5 transition-transform duration-300 group-hover:scale-[1.015] sm:h-56">
-                <div className="relative z-10 flex items-center justify-between">
-                  <span className="rounded bg-white/10 px-2.5 py-1 font-mono text-[10px] text-ink-soft">
-                    {project.category}
-                  </span>
-                  <span className="font-mono text-[10px] text-ink-dim">{project.year}</span>
-                </div>
-
-                <div className="relative z-10 my-auto space-y-1 text-center">
-                  <div className="text-lg font-bold tracking-tight text-ink sm:text-xl">{project.title}</div>
-                  <div className="line-clamp-1 font-mono text-xs text-accent2">{project.tagline}</div>
-                </div>
-
-                <div className="relative z-10 flex items-center justify-between pt-2">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/10 text-ink transition-colors group-hover:border-accent2 group-hover:bg-accent2 group-hover:text-black">
-                    <Play className="ml-0.5 h-3.5 w-3.5 fill-current" />
-                  </span>
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/10 text-ink transition-colors group-hover:bg-white group-hover:text-black">
-                    <ArrowUpRight className="h-4 w-4" />
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="space-y-3 p-5 sm:p-6">
-              <div className="flex items-baseline justify-between">
-                <h3 className="text-xl font-bold text-ink transition-colors group-hover:text-accent2">
-                  {project.title}
-                </h3>
-                <span className="font-mono text-xs text-ink-dim">{project.year.split(" ")[0]}</span>
-              </div>
-              <div className="line-clamp-1 font-mono text-xs uppercase tracking-wider text-ink-dim">
-                {project.tagline}
-              </div>
-              <p className="line-clamp-2 text-xs leading-relaxed text-ink-soft sm:text-sm">
-                {project.shortDescription}
-              </p>
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                {project.techStack.slice(0, 4).map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded border border-edge bg-white/5 px-2 py-0.5 font-mono text-[11px] text-ink"
-                  >
-                    {tech}
-                  </span>
-                ))}
-                {project.techStack.length > 4 && (
-                  <span className="rounded border border-edge bg-white/5 px-2 py-0.5 font-mono text-[11px] text-ink-dim">
-                    +{project.techStack.length - 4} more
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-12 text-center">
-        <a
-          href={PERSONAL_INFO.githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 border-b border-ink pb-1 font-mono text-sm font-medium text-ink transition-colors hover:border-accent2 hover:text-accent2"
-        >
-          <span>See more repositories on GitHub</span>
-          <ArrowUpRight className="h-4 w-4" />
-        </a>
+            See more repositories on GitHub
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </a>
+        </p>
       </div>
     </section>
   );

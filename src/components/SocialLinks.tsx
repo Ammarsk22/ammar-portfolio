@@ -1,51 +1,28 @@
-import { Github, Linkedin, Instagram, Mail } from 'lucide-react';
+import { Github, Instagram, Linkedin, Mail } from "lucide-react";
+import { PERSONAL_INFO } from "../data/portfolioData";
 
-const SocialLinks = () => {
+const LINKS = [
+  { label: "GitHub", href: PERSONAL_INFO.githubUrl, Icon: Github, external: true },
+  { label: "LinkedIn", href: PERSONAL_INFO.linkedinUrl, Icon: Linkedin, external: true },
+  { label: "Instagram", href: PERSONAL_INFO.instagramUrl, Icon: Instagram, external: true },
+  { label: "Email", href: `mailto:${PERSONAL_INFO.email}`, Icon: Mail, external: false },
+];
+
+export default function SocialLinks() {
   return (
-    <div className="flex items-center gap-6">
-      {/* GitHub Link */}
-      <a 
-        href="https://github.com/Ammarsk22"
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="text-ink-soft hover:text-ink transition-colors duration-300"
-        aria-label="GitHub"
-      >
-        <Github className="w-[22px] h-[22px] sm:w-6 sm:h-6" />
-      </a>
-
-      {/* LinkedIn Link */}
-      <a 
-        href="https://www.linkedin.com/in/skammar22/"
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="text-ink-soft hover:text-blue-500 transition-colors duration-300"
-        aria-label="LinkedIn"
-      >
-        <Linkedin className="w-[22px] h-[22px] sm:w-6 sm:h-6" />
-      </a>
-
-      {/* Instagram Link */}
-      <a 
-        href="https://www.instagram.com/sk_ammar_22/"
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="text-ink-soft hover:text-pink-500 transition-colors duration-300"
-        aria-label="Instagram"
-      >
-        <Instagram className="w-[22px] h-[22px] sm:w-6 sm:h-6" />
-      </a>
-
-      {/* Email Link */}
-      <a 
-        href="mailto:ammarsk200422@gmail.com"
-        className="text-ink-soft hover:text-green-500 transition-colors duration-300"
-        aria-label="Email"
-      >
-        <Mail className="w-[22px] h-[22px] sm:w-6 sm:h-6" />
-      </a>
-    </div>
+    <ul className="flex items-center gap-5">
+      {LINKS.map(({ label, href, Icon, external }) => (
+        <li key={label}>
+          <a
+            href={href}
+            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            aria-label={label}
+            className="text-ink-soft transition-colors duration-300 hover:text-accent2"
+          >
+            <Icon className="h-[22px] w-[22px] sm:h-6 sm:w-6" aria-hidden="true" />
+          </a>
+        </li>
+      ))}
+    </ul>
   );
-};
-
-export default SocialLinks;
+}

@@ -1,29 +1,40 @@
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, RotateCcw } from "lucide-react";
 import { PERSONAL_INFO } from "../data/portfolioData";
-import { scrollToSection } from "../hooks/useActiveSection";
 
-export default function Footer() {
+interface FooterProps {
+  onScrollToTop: () => void;
+  onReplayIntro: () => void;
+}
+
+export default function Footer({ onScrollToTop, onReplayIntro }: FooterProps) {
   return (
     <footer className="border-t border-edge px-6 py-8 sm:px-10 lg:px-14">
-      <div className="flex flex-col items-center justify-between gap-6 lg:flex-row">
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-          <h3 className="text-xl font-bold tracking-tight text-ink">{PERSONAL_INFO.name}</h3>
-          <p className="mt-1 font-mono text-xs text-ink-dim">{PERSONAL_INFO.role}</p>
+      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-5 text-center md:flex-row md:text-left">
+        <div>
+          <p className="font-display text-lg font-bold text-ink">{PERSONAL_INFO.name}</p>
+          <p className="mt-0.5 text-xs text-ink-dim">
+            © 2026 · Built with React, Vite, Tailwind CSS and Framer Motion
+          </p>
         </div>
 
-        <div className="text-center font-mono text-[11px] text-ink-dim sm:text-xs">
-          <span className="whitespace-nowrap">© 2026 Ammar Shaikh. Built with React, Vite &amp; Tailwind.</span>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onReplayIntro}
+            className="inline-flex items-center gap-2 rounded-lg border border-edge px-3.5 py-2 text-sm text-ink-soft transition-colors hover:bg-glass hover:text-ink"
+          >
+            <RotateCcw className="h-3.5 w-3.5 text-accent2" aria-hidden="true" />
+            Replay intro
+          </button>
+          <button
+            type="button"
+            onClick={onScrollToTop}
+            className="inline-flex items-center gap-2 rounded-lg border border-edge px-3.5 py-2 text-sm text-ink-soft transition-colors hover:bg-glass hover:text-ink"
+          >
+            <ArrowUp className="h-3.5 w-3.5 text-accent2" aria-hidden="true" />
+            Back to top
+          </button>
         </div>
-
-        <button
-          onClick={() => scrollToSection("home")}
-          className="inline-flex items-center gap-1.5 rounded-md border border-edge bg-glass-soft px-3.5 py-2 text-ink-soft transition-colors hover:bg-glass hover:text-ink"
-        >
-          <ArrowUp className="h-3.5 w-3.5 text-accent2" />
-          <span className="whitespace-nowrap font-mono text-[11px] font-semibold uppercase tracking-wider">
-            Back to Top
-          </span>
-        </button>
       </div>
     </footer>
   );

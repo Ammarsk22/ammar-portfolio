@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -7,29 +7,86 @@
     <title>Ammar Shaikh | Full Stack Developer</title>
     <meta
       name="description"
-      content="Portfolio of Ammar Shaikh, Full Stack Developer and Computer Technology student building modern web applications with React, TypeScript and AI tools."
+      content="Ammar Shaikh is a Full Stack Developer and B.Tech Computer Technology student from Maharashtra, India, building PWAs and web apps with React, TypeScript, Firebase and Tailwind CSS."
     />
+    <link rel="canonical" href="https://ammarsk22.github.io/ammar-portfolio/" />
+    <meta name="author" content="Ammar Shaikh" />
     <meta name="theme-color" content="#050505" />
 
-    <!-- Favicon link updated with relative path (./) -->
-    <link rel="icon" type="image/png" href="./favicon.png" />
+    <!-- Icons and PWA manifest -->
+    <link rel="icon" href="%BASE_URL%favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%BASE_URL%favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="%BASE_URL%favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%BASE_URL%apple-touch-icon.png" />
+    <link rel="manifest" href="%BASE_URL%site.webmanifest" />
 
-    <!-- Open Graph -->
+    <!-- Open Graph / link previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ammar Shaikh" />
     <meta property="og:title" content="Ammar Shaikh | Full Stack Developer" />
     <meta
       property="og:description"
-      content="Portfolio of Ammar Shaikh, Full Stack Developer and Computer Technology student building modern web applications with React, TypeScript and AI tools."
+      content="PWAs and web apps built with React, TypeScript and Firebase. Projects, experience and a peer-reviewed research paper."
     />
-    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ammarsk22.github.io/ammar-portfolio/" />
+    <meta property="og:image" content="https://ammarsk22.github.io/ammar-portfolio/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ammar Shaikh, Full Stack Developer" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ammar Shaikh | Full Stack Developer" />
+    <meta
+      name="twitter:description"
+      content="PWAs and web apps built with React, TypeScript and Firebase. Projects, experience and a peer-reviewed research paper."
+    />
+    <meta name="twitter:image" content="https://ammarsk22.github.io/ammar-portfolio/og-image.jpg" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Structured data: helps search engines connect the site to the person -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ammar Shaikh",
+        "jobTitle": "Full Stack Developer",
+        "url": "https://ammarsk22.github.io/ammar-portfolio/",
+        "image": "https://ammarsk22.github.io/ammar-portfolio/og-image.jpg",
+        "email": "mailto:ammarsk200422@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Shindkheda",
+          "addressRegion": "Maharashtra",
+          "addressCountry": "IN"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Ahinsa Institute of Technology"
+        },
+        "sameAs": [
+          "https://github.com/Ammarsk22",
+          "https://www.linkedin.com/in/skammar22/",
+          "https://www.instagram.com/sk_ammar_22/"
+        ],
+        "knowsAbout": ["React", "TypeScript", "Firebase", "Progressive Web Apps", "Tailwind CSS", "Node.js"]
+      }
+    </script>
+
+    <!-- Apply the saved theme before first paint so there is no flash. Dark is the default. -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("as-theme");
+          var theme = saved === "light" || saved === "dark" ? saved : "dark";
+          document.documentElement.setAttribute("data-theme", theme);
+          if (theme === "light") {
+            var m = document.querySelector('meta[name="theme-color"]');
+            if (m) m.setAttribute("content", "#f6f3f3");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-[#050505]">
+  <body>
+    <noscript>This portfolio needs JavaScript. You can reach Ammar Shaikh at ammarsk200422@gmail.com.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

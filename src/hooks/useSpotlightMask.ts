@@ -9,9 +9,10 @@ interface SpotlightOptions {
 
 /**
  * Builds a radial gradient mask on a hidden canvas and keeps a reveal layer's
- * mask-position glued to the (smoothed) cursor. The gradient is rendered in
- * grayscale rather than alpha so it behaves identically as a luminance mask
- * across engines that default -webkit-mask-image to luminance.
+ * mask-position glued to the (smoothed) cursor. The gradient is drawn with
+ * transparency (alpha), because CSS masks built from an image read the alpha
+ * channel in Chrome, Safari and Firefox. An opaque grayscale gradient would
+ * show up as a hard-edged square instead of a soft circle.
  */
 export function useSpotlightMask({ radius = 280, lerp = 0.1 }: SpotlightOptions = {}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -39,8 +40,8 @@ export function useSpotlightMask({ radius = 280, lerp = 0.1 }: SpotlightOptions 
     const cy = radius;
     const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
 
-    // Stops expressed as [offset, intensity%] per spec — rendered as grayscale
-    // luminance rather than alpha for cross-browser mask reliability.
+    // Stops expressed as [offset, opacity%]: fully revealed in the middle,
+    // fading smoothly to nothing at the edge.
     const stops: Array<[number, number]> = [
       [0, 100],
       [0.35, 100],
@@ -51,8 +52,7 @@ export function useSpotlightMask({ radius = 280, lerp = 0.1 }: SpotlightOptions 
     ];
 
     stops.forEach(([offset, pct]) => {
-      const v = Math.round((pct / 100) * 255);
-      gradient.addColorStop(offset, `rgb(${v},${v},${v})`);
+      gradient.addColorStop(offset, `rgba(0,0,0,${pct / 100})`);
     });
 
     ctx.fillStyle = gradient;
@@ -72,6 +72,11 @@ export function useSpotlightMask({ radius = 280, lerp = 0.1 }: SpotlightOptions 
     let raf = 0;
     let hasInteracted = false;
 
+    // Without a mouse there is nothing to follow, so the spotlight drifts on its
+    // own until the first touch or move, otherwise the reveal portrait is never seen.
+    const hasMouse = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const shouldDrift = !hasMouse && !reducedMotion;
+
     const applyPosition = (x: number, y: number) => {
       const rect = container.getBoundingClientRect();
       const left = x - rect.left - radius;
@@ -85,11 +90,19 @@ export function useSpotlightMask({ radius = 280, lerp = 0.1 }: SpotlightOptions 
       target = { x: e.clientX, y: e.clientY };
     };
 
-    const tick = () => {
+    const tick = (time: number) => {
+      if (shouldDrift && !hasInteracted) {
+        const rect = container.getBoundingClientRect();
+        const t = time / 1000;
+        target = {
+          x: rect.left + rect.width * (0.5 + 0.28 * Math.sin(t * 0.55)),
+          y: rect.top + rect.height * (0.38 + 0.16 * Math.sin(t * 0.8 + 1)),
+        };
+      }
       const factor = reducedMotion ? 1 : lerp;
       current.x += (target.x - current.x) * factor;
       current.y += (target.y - current.y) * factor;
-      if (hasInteracted || reducedMotion) {
+      if (hasInteracted || reducedMotion || shouldDrift) {
         applyPosition(current.x, current.y);
       }
       raf = requestAnimationFrame(tick);

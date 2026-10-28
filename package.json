@@ -1,6 +1,6 @@
 {
   "name": "ammar-dev-hero",
-  "homepage": "https://Ammarsk22.github.io/ammar-portfolio",
+  "homepage": "https://ammarsk22.github.io/ammar-portfolio/",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -13,6 +13,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
     "framer-motion": "^11.2.10",
     "lucide-react": "^0.383.0",
     "react": "^18.3.1",

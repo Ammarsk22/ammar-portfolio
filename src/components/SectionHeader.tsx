@@ -1,23 +1,13 @@
-import { ReactNode } from "react";
-
 interface SectionHeaderProps {
-  number: string;
   title: string;
-  meta?: ReactNode;
+  intro?: string;
 }
 
-export default function SectionHeader({ number, title, meta }: SectionHeaderProps) {
+export default function SectionHeader({ title, intro }: SectionHeaderProps) {
   return (
-    <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-edge pb-6">
-      <div className="flex items-baseline gap-3">
-        <span className="font-mono text-sm font-bold text-accent2">§{number}</span>
-        <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">{title}</h2>
-      </div>
-      {meta && (
-        <span className="font-mono text-[11px] font-semibold uppercase tracking-widest text-ink-soft">
-          {meta}
-        </span>
-      )}
-    </div>
+    <header className="max-w-2xl">
+      <h2 className="font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">{title}</h2>
+      {intro && <p className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg">{intro}</p>}
+    </header>
   );
 }

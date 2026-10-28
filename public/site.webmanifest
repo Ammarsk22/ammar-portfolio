@@ -1,0 +1,15 @@
+{
+  "name": "Ammar Shaikh | Full Stack Developer",
+  "short_name": "Ammar",
+  "description": "Portfolio of Ammar Shaikh, Full Stack Developer building PWAs with React, TypeScript and Firebase.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#050505",
+  "background_color": "#050505",
+  "icons": [
+    { "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 
 /**
- * Tracks which section id is currently "active" based on scroll position,
- * so the navbar can highlight the right link as the person scrolls.
+ * Tracks which section is "active" from the scroll position so the sidebar can
+ * highlight the right link. Uses bounding rects, so it stays correct no matter
+ * which ancestor is positioned.
  */
 export function useActiveSection(sectionIds: string[]) {
   const [activeSection, setActiveSection] = useState<string>(sectionIds[0] ?? "");
@@ -10,44 +11,42 @@ export function useActiveSection(sectionIds: string[]) {
   useEffect(() => {
     let ticking = false;
 
-    const handleScroll = () => {
-      if (ticking) return;
-      ticking = true;
+    const update = () => {
+      const probe = window.innerHeight * 0.35;
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 40;
 
-      window.requestAnimationFrame(() => {
-        const scrollPosition = window.scrollY + window.innerHeight * 0.35;
-        const isBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 40;
-
-        if (isBottom) {
-          setActiveSection(sectionIds[sectionIds.length - 1]);
-        } else {
-          let current = sectionIds[0];
-          for (let i = sectionIds.length - 1; i >= 0; i--) {
-            const el = document.getElementById(sectionIds[i]);
-            if (el && scrollPosition >= el.offsetTop) {
-              current = sectionIds[i];
-              break;
-            }
-          }
-          setActiveSection(current);
+      if (atBottom) {
+        setActiveSection(sectionIds[sectionIds.length - 1]);
+      } else {
+        let current = sectionIds[0];
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top <= probe) current = id;
         }
-
-        ticking = false;
-      });
+        setActiveSection(current);
+      }
+      ticking = false;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [sectionIds]);
 
   return activeSection;
 }
 
 export function scrollToSection(sectionId: string) {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
-  }
+  document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
 }

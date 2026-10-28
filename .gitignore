@@ -5,3 +5,7 @@ dist
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
+
+# local env (EmailJS keys)
+.env
+.env.local
